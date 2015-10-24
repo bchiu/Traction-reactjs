@@ -1,0 +1,19 @@
+.gauge-title {
+    color: #ccc;
+    font-size: 4vw;
+    font-weight: bold;
+	position: absolute;
+    top: 30%;
+    left: 0;
+    right: 0;
+}
+
+.gauge-units {
+    color: #333;
+    font-size: 5vw;
+    font-weight: bold;
+	position: absolute;
+    top: 60%;
+    left: 0;
+    right: 0;
+}

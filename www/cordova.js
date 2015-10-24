@@ -1,0 +1,1 @@
+// dummy cordova file to prevent js loading error

@@ -1,0 +1,29 @@
+html {
+    height: 100%;
+}
+
+body {
+    color: #000;
+    background: #fff;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.row {
+    height: 100%;
+}
+
+.navbar {
+    min-height: 10px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.brand {
+    font-size: 5vh;
+    text-align: center;
+}

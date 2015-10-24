@@ -1,0 +1,32 @@
+/* flip card */
+
+.flipcard {
+    background: transparent;
+    transform-style: preserve-3d;
+    /* transition: all 0.5s linear; */
+    transition: transform 0.8s;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.flipcard-front, .flipcard-back {
+    position: absolute;
+    backface-visibility: hidden;
+    width: 100%;
+    height: inherit;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    padding: 10px;
+}
+
+.flipcard-back {
+    transform: translateY(-50%) rotateY(180deg);
+    z-index: 1;
+}
+
+.flipped {
+    transform: rotateY(180deg);
+}

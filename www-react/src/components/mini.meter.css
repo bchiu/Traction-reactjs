@@ -1,0 +1,45 @@
+.mini-meter-title {
+    font-size: 1.1em;
+    line-height: 1.5em;
+}
+
+.mini-meter-value {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.mini-meter {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    height: 2vh;
+}
+
+@media screen and (orientation:portrait) {
+    .mini-meter {
+        width: 65%;
+    }
+}
+
+@media screen and (orientation:landscape) {
+    .mini-meter {
+        width: 100%;
+        margin-bottom: 5vh;
+    }
+}
+
+.mini-meter::-webkit-meter-bar {
+    background: transparent;
+}
+
+.mini-meter::-webkit-meter-optimum-value {
+    background: #86CC00; /* Green */
+}
+
+.mini-meter::-webkit-meter-suboptimum-value {
+    background: #FFDB1A; /* Yellow */
+}
+
+.mini-meter::-webkit-meter-even-less-good-value {
+    background: #CC4600; /* Red */
+}

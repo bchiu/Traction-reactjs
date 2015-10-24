@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Security-Policy" content="default-src *; img-src * data:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+
+        <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="lib/swiper/dist/css/swiper.min.css">
+        <link rel="stylesheet" type="text/css" href="css/dashboard.css">
+        <link rel="stylesheet" type="text/css" href="css/flipcard.css">
+        <link rel="stylesheet" type="text/css" href="css/jumbo-meter.css">
+        <link rel="stylesheet" type="text/css" href="css/maps.css">
+        <link rel="stylesheet" type="text/css" href="css/gauge.css">
+        <link rel="stylesheet" type="text/css" href="css/datum.css">
+        <link rel="stylesheet" type="text/css" href="css/mini-meter.css">
+        <link rel="stylesheet" type="text/css" href="css/swiper.css">
+        <link rel="stylesheet" type="text/css" href="css/spinner.css">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+
+        <script src="cordova.js"></script>
+        <script src="lib/jquery/jquery-2.1.1.js"></script>
+        <script src="lib/lodash/lodash.min.js"></script>
+        <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+        <script src="lib/snap.svg/dist/snap.svg-min.js"></script>
+        <script src="lib/jquery-knob/js/jquery.knob.js"></script>
+        <script src="lib/swiper/dist/js/swiper.jquery.min.js"></script>
+
+        <script src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=true"></script>
+
+        <script src="js/flipcard.js"></script>
+        <script src="js/gauge.js"></script>
+        <script src="js/looper.js"></script>
+        <script src="js/maps.js"></script>
+        <script src="js/meter.js"></script>
+        <script src="js/swiper.js"></script>
+        <script src="js/spinner.js"></script>
+        <script src="js/util.js"></script>
+        <script src="js/devices.js"></script>
+        <script src="js/channels.js"></script>
+        <script src="js/vesc.js"></script>
+        <script src="js/index.js"></script>
+
+        <title>BLDC</title>
+    </head>
+
+    <body>
+        <!-- navigation bar -->
+        <nav class="navbar bg-primary" style="height:10%">
+            <div class="row">
+                <div class="col-xs-4">
+                    <button type="button" id="devices-button" class="btn btn-primary" data-toggle="modal" data-target="#devices">
+                        <img src="img/ic_bluetooth_white_24px.svg" class="icon-bluetooth" style="height:20px">
+                    </button>
+                </div>
+                <div class="col-xs-4">
+                    <div class="brand">BLDC</div>
+                </div>
+                <div class="col-xs-4">
+                    <div id="channels" class="dropdown pull-right">
+                        <button type="button" id="channels-button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                            CH1 <span class="caret"></span>
+                        </button>
+                        <ul id="channels-menu" class="dropdown-menu">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- battery voltmeter -->
+        <div class="jumbo-meter-box" style="height:5%">
+            <meter id="meterBattery" class="jumbo-meter" min="0" max="16.8" low="12" high="16.8" optimum="16.8" value="16.8" units="V"></meter>
+            <span id="meterBattery-value" class="jumbo-meter-value">16.8 V</span>
+        </div>
+
+        <!-- swipe box container -->
+        <div class="swiper-container" style="height:80%">
+            <div class="swiper-wrapper">
+
+                <!-- dashboard slide -->
+                <div class="swiper-slide">
+
+                    <!-- linear meters -->
+                    <div class="dash-top">
+                        <div class="mini-meter-box">
+                            <div>
+                                <div>
+                                    <span class="mini-meter-title">Throttle:</span>
+                                    <span id="meterThrottle-value" class="mini-meter-value">10%</span>
+                                    <meter id="meterThrottle" class="mini-meter" min="0" max="100" low="50" high="75" optimum="0" value="100" units="%"></meter>
+                                </div>
+                            </div>
+                            <div>
+                                <div>
+                                    <span class="mini-meter-title">Motor<sup>T</sup>:</span>
+                                    <span id="meterMotorTemp-value" class="mini-meter-value">100&deg;C</span>
+                                    <meter id="meterMotorTemp" class="mini-meter" min="0" max="120" low="50" high="90" optimum="0" value="100" units="&deg;C"></meter>
+                                </div>
+                            </div>
+                            <div>
+                                <div>
+                                    <span class="mini-meter-title">Esc<sup>T</sup>:</span>
+                                    <span id="meterEscTemp-value" class="mini-meter-value">70&deg;C</span>
+                                    <meter id="meterEscTemp" class="mini-meter" min="0" max="120" low="50" high="90" optimum="25" value="70" units="&deg;C"></meter>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- speed & power gauges -->
+                    <div class="dash-center">
+                        <div id="flipCard" class="flipcard">
+                            <div class="flipcard-front">
+                                <div class="gauge-title">Speed</div>
+                                <input id="gaugeSpeed" data-width="100%" class="dial" value="0">
+                                <div class="gauge-units">KPH</div>
+                            </div>
+                            <div class="flipcard-back">
+                                <div class="gauge-title">Power</div>
+                                <input id="gaugePower" data-width="100%" class="dial" value="0">
+                                <div class="gauge-units">Watts</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- numeric data -->
+                    <div class="dash-bottom">
+                        <div class="datum-table">
+                            <div class="datum-row">
+                                <div class="datum-col bg-info">
+                                    <span>Brake</span>
+                                    <span class="datum-value">2.5v</span>
+                                </div>
+                                <div class="datum-col">
+                                    <span>Throttle</span>
+                                    <span class="datum-value">2.5v</span>
+                                </div>
+                                <div class="datum-col bg-info">
+                                    <span>RPM</span>
+                                    <span class="datum-value">2560</span>
+                                </div>
+                            </div>
+                            <div class="datum-row">
+                                <div class="datum-col">
+                                    <span>eRPM</span>
+                                    <span class="datum-value">19800</span>
+                                </div>
+                                <div class="datum-col bg-info">
+                                    <span>Current</span>
+                                    <span class="datum-value">30A</span>
+                                </div>
+                                <div class="datum-col">
+                                    <span>Used Ah</span>
+                                    <span class="datum-value">3.5</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- google maps slide -->
+                <div class="swiper-slide">
+                    <div id="maps-canvas"></div>
+                    <button id="lockSwiperButton" class="maps-button swiper-unlocked"></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- trip odometer -->
+        <div class="jumbo-meter-box" style="height:5%">
+            <meter id="meterDistance" class="jumbo-meter" min="0" max="100" low="0" high="100" optimum="0" value="50" units="Km"></meter>
+            <div id="meterDistance-value" class="jumbo-meter-value">50 Km</div>
+        </div>
+
+        <!-- devices modal -->
+        <div id="devices" class="modal fade devices-modal" tabindex="-1" role="dialog" aria-labelledby="devices-list">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+
+                    <div class="modal-header bg-primary">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Bluetooth Devices</h4>
+                    </div>
+
+                    <div id="devices-list" class="list-group">
+                    </div>
+
+                    <div id="devices-message" style="padding:15px;padding-top:0">
+                        Discovering devices...
+
+                        <!-- reusable spinner -->
+                        <svg id="spinner" class="spinner" style="float:right" width="25px" height="25px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                            <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

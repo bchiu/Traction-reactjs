@@ -1,0 +1,16 @@
+<ion-modal-view>
+
+    <ion-header-bar class="bar bar-header bar-positive">
+        <h1 class="title">Bluetooth Devices</h1>
+        <button class="button button-clear button-primary" ng-click="closeList()">Close</button>
+    </ion-header-bar>
+
+    <ion-content>
+        <ion-list>
+            <ion-radio ng-model="currentDevice.id" ng-value="device.id" ng-repeat="device in devices" ng-change="connect(device)">
+                <b>{{device.name}}</b> ({{device.id}})
+            </ion-radio>
+        </ion-list>
+    </ion-content>
+
+</ion-modal-view>

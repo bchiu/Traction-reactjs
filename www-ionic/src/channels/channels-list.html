@@ -1,0 +1,16 @@
+<ion-modal-view>
+
+    <ion-header-bar class="bar bar-header bar-positive">
+        <h1 class="title">Data Channels</h1>
+        <button class="button button-clear button-primary" ng-click="closeList()">Close</button>
+    </ion-header-bar>
+
+    <ion-content>
+        <ion-list>
+            <ion-radio ng-repeat="channel in channels.list">
+                Channel {{i}}
+            </ion-radio>
+        </ion-list>
+    </ion-content>
+
+</ion-modal-view>

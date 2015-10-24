@@ -1,0 +1,21 @@
+/* swipe-box */
+
+@media screen and (orientation:portrait) {
+    .swiper-container {
+        background: -webkit-linear-gradient(top, rgba(226,226,226,1) 0%,rgba(221,221,221,1) 0%,rgba(255,255,255,1) 30%,rgba(255,255,255,1) 100%); 
+    }
+}
+
+@media screen and (orientation:landscape) {
+    .swiper-container {
+        background: -webkit-linear-gradient(left, rgba(226,226,226,1) 0%,rgba(221,221,221,1) 0%,rgba(255,255,255,1) 30%,rgba(255,255,255,1) 100%); 
+    }
+}
+
+.swiper-locked {
+    background-image: url("../img/locked.png"); 
+}
+
+.swiper-unlocked {
+    background-image: url("../img/unlocked.png"); 
+}
