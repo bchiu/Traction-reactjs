@@ -11,7 +11,7 @@ Traction draws upon the ReactJS framework to provide an architecture that encour
 * ReactJS - front-end framework and JSX templating engine
 * Radium - inline js styles for React components
 * React-Bootstrap - Bootstrap styled React component library
-* WebPack - compile, bundle assets and development server
+* WebPack - asset compiler/bundler and development server
 * Protobuf - language/platform neutral protocol for serializing data
 
 ## Development environment
