@@ -10,7 +10,6 @@ var Sliders = React.createClass({
 
     componentDidMount: function() {
         this.swiper = new Swiper('.swiper-container', {
-            preventClicksPropagation: false
         });
     },
 
@@ -22,7 +21,7 @@ var Sliders = React.createClass({
                         this.props.children.map(
                             function(child, index) {
                                 return (
-                                    <div key={index} className="swiper-slide">
+                                    <div key={index} style={styles.slide} className="swiper-slide">
                                         { child }
                                     </div>
                                 )
@@ -64,11 +63,13 @@ var styles = {
 
     container: {
         height: '100%',
+        background: '#ddd'
+    },
 
+    slide: {
         '@media screen and (orientation:portrait)': {
             background: '-webkit-linear-gradient(right, rgba(226,226,226,1) 0%,rgba(221,221,221,1) 0%,rgba(255,255,255,1) 30%,rgba(255,255,255,1) 100%)', 
         },
-
         '@media screen and (orientation:landscape)': {
             background: '-webkit-linear-gradient(left, rgba(226,226,226,1) 0%,rgba(221,221,221,1) 0%,rgba(255,255,255,1) 30%,rgba(255,255,255,1) 100%)',
         }

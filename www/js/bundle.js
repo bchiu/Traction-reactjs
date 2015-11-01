@@ -117,13 +117,23 @@
 	        this.looper.stop();
 	    },
 
+	    onTouchStart: function onTouchStart() {
+	        this.looper.stop();
+	    },
+
+	    onTouchEnd: function onTouchEnd() {
+	        this.looper.start();
+	    },
+
 	    render: function render() {
 	        return React.createElement(EasySlider, {
 	            title: 'Traction',
 	            data: this.state.data,
 	            deviceConnected: this.state.deviceConnected,
 	            onDeviceConnect: this.onDeviceConnect,
-	            onDeviceDisconnect: this.onDeviceDisconnect });
+	            onDeviceDisconnect: this.onDeviceDisconnect,
+	            onTouchStart: this.onTouchStart,
+	            onTouchEnd: this.onTouchEnd });
 	    }
 	});
 
@@ -204,7 +214,10 @@
 	                { style: { height: '80%' } },
 	                React.createElement(
 	                    Sliders,
-	                    { ref: 'sliders' },
+	                    {
+	                        ref: 'sliders',
+	                        onTouchStart: this.props.onTouchStart,
+	                        onTouchEnd: this.props.onTouchEnd },
 	                    React.createElement(Dashboard, { data: data }),
 	                    React.createElement(
 	                        'div',
@@ -10149,7 +10162,14 @@
 	    },
 
 	    componentDidMount: function componentDidMount() {
-	        this.swiper = new Swiper('.swiper-container', {});
+	        this.swiper = new Swiper('.swiper-container', {
+	            onTouchStart: (function (swiper, event) {
+	                this.props.onTouchStart();
+	            }).bind(this),
+	            onTouchEnd: (function (swiper, event) {
+	                this.props.onTouchEnd();
+	            }).bind(this)
+	        });
 	    },
 
 	    render: function render() {
@@ -10162,7 +10182,7 @@
 	                this.props.children.map(function (child, index) {
 	                    return React.createElement(
 	                        'div',
-	                        { key: index, className: 'swiper-slide' },
+	                        { key: index, style: styles.slide, className: 'swiper-slide' },
 	                        child
 	                    );
 	                })
@@ -10197,11 +10217,13 @@
 
 	    container: {
 	        height: '100%',
+	        background: '#ddd'
+	    },
 
+	    slide: {
 	        '@media screen and (orientation:portrait)': {
 	            background: '-webkit-linear-gradient(right, rgba(226,226,226,1) 0%,rgba(221,221,221,1) 0%,rgba(255,255,255,1) 30%,rgba(255,255,255,1) 100%)'
 	        },
-
 	        '@media screen and (orientation:landscape)': {
 	            background: '-webkit-linear-gradient(left, rgba(226,226,226,1) 0%,rgba(221,221,221,1) 0%,rgba(255,255,255,1) 30%,rgba(255,255,255,1) 100%)'
 	        }
