@@ -23,6 +23,10 @@
                         {
                             "xml": "<access origin=\"*://$LIVERELOAD_HOST\" />",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"PowerManagement\"><param name=\"android-package\" value=\"org.apache.cordova.powermanagement.PowerManagement\" /></feature>",
+                            "count": 1
                         }
                     ],
                     "/widget": [
@@ -42,6 +46,12 @@
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.BLUETOOTH_ADMIN\" />",
+                            "count": 1
+                        }
+                    ],
+                    "/*": [
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.WAKE_LOCK\" />",
                             "count": 1
                         }
                     ]
@@ -74,6 +84,9 @@
             "PACKAGE_NAME": "com.buttonbikes.bldcapp"
         },
         "cordova-plugin-bluetooth-serial": {
+            "PACKAGE_NAME": "com.buttonbikes.bldcapp"
+        },
+        "at.gofg.sportscomputer.powermanagement": {
             "PACKAGE_NAME": "com.buttonbikes.bldcapp"
         }
     },

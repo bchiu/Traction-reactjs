@@ -1,0 +1,34 @@
+html, body, #app {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+body {
+    color: #000;
+    background: #fff;
+    font-family: 'RobotoDraft', 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    -webkit-text-size-adjust: 100%;
+}
+
+div {
+    overflow: 'hidden';
+}
+
+meter::-webkit-meter-bar {
+    background: transparent;
+}
+
+meter::-webkit-meter-optimum-value {
+    background: #86CC00; /* Green */
+}
+
+meter::-webkit-meter-suboptimum-value {
+    background: #FFDB1A; /* Yellow */
+}
+
+meter::-webkit-meter-even-less-good-value {
+    background: #CC4600; /* Red */
+}

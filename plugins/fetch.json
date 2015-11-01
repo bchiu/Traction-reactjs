@@ -39,5 +39,14 @@
         },
         "is_top_level": false,
         "variables": {}
+    },
+    "at.gofg.sportscomputer.powermanagement": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Viras-/cordova-plugin-powermanagement.git",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

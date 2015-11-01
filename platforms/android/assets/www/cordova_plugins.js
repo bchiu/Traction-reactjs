@@ -18,6 +18,13 @@ module.exports = [
         "clobbers": [
             "window.bluetoothSerial"
         ]
+    },
+    {
+        "file": "plugins/at.gofg.sportscomputer.powermanagement/www/powermanagement.js",
+        "id": "at.gofg.sportscomputer.powermanagement.device",
+        "clobbers": [
+            "window.powerManagement"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -26,7 +33,8 @@ module.exports.metadata =
     "cordova-plugin-whitelist": "1.0.0",
     "org.apache.cordova.device": "0.3.0",
     "org.apache.cordova.console": "0.2.13",
-    "cordova-plugin-bluetooth-serial": "0.4.4"
+    "cordova-plugin-bluetooth-serial": "0.4.4",
+    "at.gofg.sportscomputer.powermanagement": "1.1.0"
 }
 // BOTTOM OF METADATA
 });

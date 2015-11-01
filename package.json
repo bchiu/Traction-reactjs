@@ -1,48 +1,31 @@
 {
-    "name": "bldc-app",
-    "version": "1.0.0",
-    "description": "BLDC motor controller app.",
-    "main": "gulpfile.js",
-    "dependencies": {
-    },
-    "devDependencies": {
-        "bootstrap": "^3.3.5",
-        "babel": "^5.8.23",
-        "browser-sync": "^2.9.11",
-        "browserify": "^11.2.0",
-        "gulp": "^3.9.0",
-        "gulp-babel": "^5.2.1",
-        "del": "^2.0.2",
-        "gulp-dest": "^0.2.2",
-        "gulp-jshint": "^1.11.2",
-        "gulp-ruby-sass": "^2.0.4",
-        "gulp-rename": "^1.2.2",
-        "gulp-minify-css": "^1.2.1",
-        "gulp-uglify": "^1.4.1",
-        "gulp-watch": "^4.3.5",
-        "material-ui": "^0.12.3",
-        "react-dom": "^0.14.0",
-        "react-tap-event-plugin": "^0.1.8",
-        "react": "^0.14.0",
-        "reactify": "^1.1.1",
-        "vinyl-buffer": "^1.0.0",
-        "vinyl-source-stream": "^1.1.0",
-        "watchify": "^3.4.0"
-        },
-    "scripts": {
-        "build":  "browserify -x react -x react-dom -t babelify www/src/app.js -o www/dist/app.js",
-        "vendor": "browserify -r react -r react-dom > www/dist/vendor.js",
-        "watch":  "watchify -x react -x react-dom -t babelify www/src/app.js -o www/dist/app.js -d",
-        "server": "browser-sync start --server www --files \"www/*.html, www/dist/*.js, www/src/**/*.css\" --no-open",
-        "serve":  "start /B npm run watch && npm run server"
-    },
-    "keywords": [
-        "bldc",
-        "motor",
-        "reactjs",
-        "cordova",
-        "android"
-    ],
-    "author": "Ben Chiu",
-    "license": "ISC"
+  "name": "Traction",
+  "version": "1.0.0",
+  "description": "Traction EV console app",
+  "main": "www/src/app.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bchiu/traction.git"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "babel-core": "^6.0.2",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0",
+    "webpack": "^1.12.2",
+    "webpack-dev-server": "^1.12.1"
+  },
+  "scripts": {
+    "build": "webpack --progress --colors --watch",
+    "serve": "webpack-dev-server --content-base www/ --inline --hot --progress --colors --no-info"
+  },
+  "keywords": [
+    "bldc",
+    "motor",
+    "reactjs",
+    "cordova",
+    "android"
+  ],
+  "author": "Ben Chiu",
+  "license": "ISC"
 }
