@@ -1,11 +1,11 @@
 {
   "name": "Traction",
   "version": "1.0.0",
-  "description": "Traction EV console app",
+  "description": "Electric Vehicle Dashboard Framework",
   "main": "www/src/app.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bchiu/traction.git"
+    "url": "https://github.com/bchiu/Traction.git"
   },
   "dependencies": {},
   "devDependencies": {
