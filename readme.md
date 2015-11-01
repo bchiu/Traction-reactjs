@@ -19,3 +19,9 @@ Traction draws upon the ReactJS framework to provide an architecture that encour
 * Chrome Canary Browser + DevTools - debugging, DOM inspection and editing
 * Sublime Text 3 + various plugins - main IDE, code editor
 * Cmder - split-pane command terminal windows
+
+## Screen shots
+
+![screen shot1](https://raw.githubusercontent.com/bchiu/Traction/master/docs/images/easy.slider.screen1.png)
+
+![screen shot2](https://raw.githubusercontent.com/bchiu/Traction/master/docs/images/easy.slider.screen2.png)
