@@ -69,14 +69,24 @@ var Traction = React.createClass({
         this.looper.stop();
     },
 
+    onTouchStart: function() {
+        this.looper.stop();
+    },
+
+    onTouchEnd: function() {
+        this.looper.start();
+    },
+
     render: function() {
         return (
         	<EasySlider 
         		title="Traction" 
-        		data={this.state.data}
+        		data={this.state.data}                
         		deviceConnected={this.state.deviceConnected}
         		onDeviceConnect={this.onDeviceConnect}
-        		onDeviceDisconnect={this.onDeviceDisconnect} />
+        		onDeviceDisconnect={this.onDeviceDisconnect} 
+                onTouchStart={this.onTouchStart}
+                onTouchEnd={this.onTouchEnd} />
         )
     }
 });

@@ -46,7 +46,11 @@ var EasySlider = React.createClass({
                 </div>
 
                 <div style={{ height:'80%' }}>
-    		        <Sliders ref="sliders">
+    		        <Sliders 
+                        ref="sliders"
+                        onTouchStart={this.props.onTouchStart}
+                        onTouchEnd={this.props.onTouchEnd}>
+
                         <Dashboard data={data} />
                         <div style={{ height:'100%' }}>
                             <GoogleMaps />

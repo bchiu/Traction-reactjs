@@ -10,6 +10,8 @@ var Sliders = React.createClass({
 
     componentDidMount: function() {
         this.swiper = new Swiper('.swiper-container', {
+            onTouchStart: function(swiper, event) { this.props.onTouchStart() }.bind(this),
+            onTouchEnd:   function(swiper, event) { this.props.onTouchEnd()   }.bind(this)
         });
     },
 
