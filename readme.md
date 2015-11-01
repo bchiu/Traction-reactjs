@@ -1,9 +1,9 @@
 # Traction
 #### EV Dashboard Development Framework
 
-Traction is a hybrid mobile framework for building rich human machine interfaces (ie. dashboards) for different types of electric vehicles, from e-bikes and e-skateboards to electric motorcycles and cars. It began as a simple dashboard app for the VESC bldc controller by Benjamin Vedder (https://github.com/vedderb/bldc) and migrated towards a platform for building custom GUIs that connect to different motor controllers. 
+Traction is a hybrid mobile framework for building rich human machine interfaces (ie. dashboards) for different types of electric vehicles, from e-bikes and e-skateboards to electric motorcycles and cars. It began as a simple dashboard app for the Vesc BLDC controller by Benjamin Vedder (https://github.com/vedderb/bldc) and migrated towards a platform for building custom GUIs that connect to different motor controllers. 
 
-Traction draws upon the ReactJS framework to provide an architecture that encourages the use of self-contained and fully styled, reusable components. These include speedometers, temperature gauges, trip odometers, battery indicators, watt meters, etc. K.I.S.S. principles and zen philosophy is the underlying emphasis. To achieve this, Traction exclusively relies on HTML5/CSS/javascript and uses minimal native platform code. 
+Traction draws upon the ReactJS framework to provide an architecture that encourages the use of self-contained and fully styled, reusable components. These include speedometers, temperature gauges, trip odometers, battery indicators, watt meters, etc. K.I.S.S. principles and zen philosophy is the underlying emphasis. To achieve this, Traction exclusively relies on HTML5/CSS/Javascript and uses minimal native platform code. 
 
 ## Core technologies used
 
@@ -20,7 +20,18 @@ Traction draws upon the ReactJS framework to provide an architecture that encour
 * Sublime Text 3 + various plugins - main IDE, code editor
 * Cmder - split-pane command terminal windows
 
+## Supported motor controllers
+
+* Vesc - http://vedder.se/2015/01/vesc-open-source-esc/
+* Mobipus (soon) - http://mobipus.com/
+
+## User interfaces available
+
+* Easy Slider - simple responsive layout that works with very small devices 
+
 ## Screen shots
+
+__Easy Slider__
 
 ![screen shot1](https://raw.githubusercontent.com/bchiu/Traction/master/docs/images/easy.slider.screen1.png)
 
