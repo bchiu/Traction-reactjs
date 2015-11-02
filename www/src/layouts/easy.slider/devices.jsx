@@ -87,6 +87,7 @@ var Devices = React.createClass({
 
     handleError: function(error) {
         this.disconnectDevice();
+        console.error(error);
         alert(error);
     },
 
@@ -118,7 +119,7 @@ var Devices = React.createClass({
                 this.hideSpinner();
                 this.hideModal();
                 this.props.onConnect(); // onConnect() callback
-                console.log("Connected to: " + uuid);
+                console.log("Connected to device: " + uuid);
             }.bind(this), this.handleError
         );
     },

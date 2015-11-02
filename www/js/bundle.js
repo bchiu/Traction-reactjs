@@ -71,38 +71,36 @@
 	        this.data = new DataFrame();
 	        this.bldc.bindData(this.data);
 
-	        // data update loop
-	        this.looper = new Looper(15, (function () {
-
-	            // send serial request
-	            this.bldc.requestValues();
-
-	            // randomize data for debug
-	            if (window.dev) this.data.randomize();
-
-	            // commit data updates to state
-	            this.setState({ data: this.data });
-	        }).bind(this));
-
 	        return {
 	            deviceConnected: false,
 	            data: this.data
 	        };
 	    },
 
+	    componentDidMount: function componentDidMount() {
+	        $.material.init();
+
+	        // data update loop
+	        this.looper = new Looper(15, (function () {
+
+	            if (window.dev) this.data.randomize(); // randomize data for debug
+	            else if (!this.state.deviceConnected) return; // disconnected, exit loop
+	                else this.bldc.requestValues(); // send serial request
+
+	            this.setState({ data: this.data }); // commit data updates to state
+	        }).bind(this));
+
+	        if (window.dev) this.looper.test('app');
+	    },
+
 	    enableWakeLock: function enableWakeLock() {
 	        document.addEventListener('deviceready', function () {
 	            window.powerManagement.acquire(function () {
-	                console.log('Wakelock acquired');
+	                console.warn('Wakelock acquired');
 	            }, function () {
-	                console.log('Failed to acquire wakelock');
+	                console.warn('Failed to acquire wakelock');
 	            });
 	        });
-	    },
-
-	    componentDidMount: function componentDidMount() {
-	        $.material.init();
-	        if (window.dev) this.looper.test('app');
 	    },
 
 	    onDeviceConnect: function onDeviceConnect() {
@@ -796,44 +794,44 @@
 	var Radium = __webpack_require__(4);
 
 	var Datum = React.createClass({
-		displayName: 'Datum',
+					displayName: 'Datum',
 
-		render: function render() {
-			var value = parseFloat(this.props.value).toFixed(this.props.precision);
+					render: function render() {
+									var value = parseFloat(this.props.value).toFixed(this.props.precision);
 
-			return React.createElement(
-				'div',
-				{ style: styles.datum },
-				React.createElement(
-					'span',
-					{ style: styles.title },
-					this.props.title
-				),
-				' ',
-				React.createElement(
-					'span',
-					{ style: styles.value },
-					value,
-					this.props.units
-				)
-			);
-		}
+									return React.createElement(
+													'div',
+													{ style: styles.datum },
+													React.createElement(
+																	'span',
+																	{ style: styles.title },
+																	this.props.title
+													),
+													' ',
+													React.createElement(
+																	'span',
+																	{ style: styles.value },
+																	value,
+																	this.props.units
+													)
+									);
+					}
 	});
 
 	var styles = {
 
-		datum: {
-			fontSize: '4vmin',
-			fontWeight: 'bold'
-		},
+					datum: {
+									fontSize: '4vmin',
+									fontWeight: 'bold'
+					},
 
-		title: {
-			color: '#999'
-		},
+					title: {
+									color: '#999'
+					},
 
-		value: {
-			color: '#333'
-		}
+					value: {
+									color: '#333'
+					}
 	};
 
 	module.exports = Radium(Datum);
@@ -1008,6 +1006,7 @@
 
 	    handleError: function handleError(error) {
 	        this.disconnectDevice();
+	        console.error(error);
 	        alert(error);
 	    },
 
@@ -1042,7 +1041,7 @@
 	            this.hideSpinner();
 	            this.hideModal();
 	            this.props.onConnect(); // onConnect() callback
-	            console.log("Connected to: " + uuid);
+	            console.log("Connected to device: " + uuid);
 	        }).bind(this), this.handleError);
 	    },
 
@@ -10548,13 +10547,13 @@
 	        startListening: function() {
 	            listening = true;
 	            bluetoothSerial.subscribeRawData(onDataReady, onError);
-	            console.log("listening for data");
+	            console.log("Listening for data");
 	        },
 
 	        stopListening: function() {
 	            listening = false;
 	            bluetoothSerial.unsubscribeRawData();
-	            console.log("stopped listening for data");
+	            console.log("Stopped listening for data");
 	        },
 
 	        requestValues: function() {

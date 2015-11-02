@@ -36,3 +36,9 @@ __Easy Slider__
 ![screen shot1](https://raw.githubusercontent.com/bchiu/Traction/master/docs/images/easy.slider.screen1.png)
 
 ![screen shot2](https://raw.githubusercontent.com/bchiu/Traction/master/docs/images/easy.slider.screen2.png)
+
+# License
+
+[The MIT License (MIT)](./license.md)
+
+Copyright (c) 2015 Ben Chiu

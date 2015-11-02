@@ -30,6 +30,7 @@ var Traction = React.createClass({
 
             // randomize data for debug
             if (window.dev) this.data.randomize();
+            else if (!this.state.deviceConnected) return;
 
             // commit data updates to state
             this.setState({ data: this.data })

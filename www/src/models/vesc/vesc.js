@@ -141,13 +141,13 @@ module.exports = (function() {
         startListening: function() {
             listening = true;
             bluetoothSerial.subscribeRawData(onDataReady, onError);
-            console.log("listening for data");
+            console.log("Listening for data");
         },
 
         stopListening: function() {
             listening = false;
             bluetoothSerial.unsubscribeRawData();
-            console.log("stopped listening for data");
+            console.log("Stopped listening for data");
         },
 
         requestValues: function() {
