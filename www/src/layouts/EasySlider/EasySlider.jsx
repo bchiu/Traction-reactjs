@@ -3,12 +3,12 @@
 */
 var React      = require('react');
 var Radium     = require('radium');
-var Dashboard  = require('./dashboard.jsx');
-var GoogleMaps = require('./google.maps.jsx');
-var Devices    = require('./devices.jsx');
-var ToolBar    = require('./toolbar.jsx');
-var Sliders    = require('../../components/sliders.jsx');
-var JumboMeter = require('../../components/jumbo.meter.jsx');
+var Dashboard  = require('./Dashboard');
+var GoogleMaps = require('./GoogleMaps');
+var Devices    = require('./Devices');
+var ToolBar    = require('./Toolbar');
+var Sliders    = require('../../components/Sliders');
+var JumboMeter = require('../../components/JumboMeter');
 
 var EasySlider = React.createClass({
  

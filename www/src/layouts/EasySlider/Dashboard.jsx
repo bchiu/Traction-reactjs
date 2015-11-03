@@ -1,9 +1,9 @@
 var React      = require('react');
 var Radium     = require('radium');
-var MiniMeter  = require("../../components/mini.meter.jsx");
-var Flipcard   = require("../../components/flipcard.jsx");
-var Gauge      = require("../../components/gauge.jsx");
-var Datum      = require("../../components/datum.jsx");
+var MiniMeter  = require("../../components/MiniMeter");
+var Flipcard   = require("../../components/Flipcard");
+var ZenGauge   = require("../../components/ZenGauge");
+var Datum      = require("../../components/Datum");
 
 var Dashboard = React.createClass({
     render: function() {
@@ -71,7 +71,7 @@ var Dashboard = React.createClass({
                 <div style={styles.center}>
                     <Flipcard id="flipcard1">
 
-                        <Gauge 
+                        <ZenGauge 
                             id="gaugeSpeed" 
                             title="Speed" 
                             units="KPH"   
@@ -81,7 +81,7 @@ var Dashboard = React.createClass({
                             precision="0"
                             value={data.speed} />
 
-                        <Gauge 
+                        <ZenGauge 
                             id="gaugePower" 
                             title="Power" 
                             units="Watts" 
@@ -90,6 +90,7 @@ var Dashboard = React.createClass({
                             step="1"
                             precision="0"
                             value={data.power} />
+                            
                     </Flipcard>
                 </div>
 

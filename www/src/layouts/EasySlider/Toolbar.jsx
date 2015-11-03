@@ -1,6 +1,6 @@
 var React    = require('react');
 var Radium   = require('radium');
-var Channels = require('./channels.jsx');
+var Channels = require('./Channels');
 
 var Toolbar = React.createClass({
     render: function() {

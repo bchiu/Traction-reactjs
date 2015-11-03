@@ -1,10 +1,11 @@
 var React      = require('react');
 var ReactDOM   = require('react-dom');
-var EasySlider = require('./layouts/easy.slider/easy.slider.jsx');
-var DataFrame  = require('./models/common/data.frame.js');
-var Vesc       = require('./models/vesc/vesc.js');
-var Looper     = require('./helpers/looper.js');
-var Util       = require('./helpers/util.js');
+var DataFrame  = require('./models/common/DataFrame');
+var Vesc       = require('./models/vesc/Vesc');
+var Looper     = require('./helpers/Looper');
+var Util       = require('./helpers/Util');
+var EasySlider = require('./layouts/EasySlider/EasySlider');
+var SubMission = require('./layouts/SubMission/SubMission');
 //var ProtoBuf   = require('protobufjs');
 
 var Traction = React.createClass({
@@ -42,7 +43,7 @@ var Traction = React.createClass({
 
         }.bind(this));
 
-        if (window.dev) this.looper.test('app');
+        //if (window.dev) this.looper.test('app');
     },
 
     enableWakeLock: function() {
@@ -76,17 +77,19 @@ var Traction = React.createClass({
 
     render: function() {
         return (
-        	<EasySlider 
-        		title="Traction" 
-        		data={this.state.data}                
-        		deviceConnected={this.state.deviceConnected}
-        		onDeviceConnect={this.onDeviceConnect}
-        		onDeviceDisconnect={this.onDeviceDisconnect} 
+            <this.props.layout
+                title="Traction" 
+                data={this.state.data}                
+                deviceConnected={this.state.deviceConnected}
+                onDeviceConnect={this.onDeviceConnect}
+                onDeviceDisconnect={this.onDeviceDisconnect} 
                 onTouchStart={this.onTouchStart}
                 onTouchEnd={this.onTouchEnd} />
         )
     }
 });
 
-var App = React.createFactory(Traction);
-ReactDOM.render(App(), document.getElementById('app'));
+
+//var layout = EasySlider;
+var layout = SubMission;
+ReactDOM.render(<Traction layout={layout} />, document.getElementById('app'));

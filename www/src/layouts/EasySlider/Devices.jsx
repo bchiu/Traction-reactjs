@@ -7,7 +7,7 @@ var Modal         = require('react-bootstrap/lib/Modal');
 var Button        = require('react-bootstrap/lib/Button');
 var ListGroup     = require('react-bootstrap/lib/ListGroup');
 var ListGroupItem = require('react-bootstrap/lib/ListGroupItem');
-var Spinner       = require('../../components/spinner.jsx');
+var Spinner       = require('../../components/Spinner');
 
 var Devices = React.createClass({
 

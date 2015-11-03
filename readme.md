@@ -28,6 +28,7 @@ Traction draws upon the ReactJS framework to provide an architecture that encour
 ## User interfaces available
 
 * Easy Slider - simple responsive layout that works with very small devices 
+* Sub Mission - tribute to the Mission-R motorcycle which has now gone under
 
 ## Screen shots
 

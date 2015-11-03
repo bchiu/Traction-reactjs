@@ -1,6 +1,5 @@
 var React    = require('react');
 var Radium   = require('radium');
-var ReactDOM = require('react-dom');
 
 var Spinner = React.createClass({
     render: function() {

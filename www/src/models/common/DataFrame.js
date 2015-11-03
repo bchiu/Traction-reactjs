@@ -32,6 +32,7 @@ module.exports = function() {
     this.odometer = 0.0;
     this.speed = 0;
     this.power = 0;
+    this.power_kw = 0.0;
     this.throttle_v = 0.0;
 	this.fault_code = '';
 
@@ -60,6 +61,7 @@ module.exports = function() {
         this.odometer           = randFloat(0, 100, 1);
         this.speed              = randFloat(-50, 100, 0);
         this.power              = randFloat(-1000, 1000, 0);
+        this.power_kw           = randFloat(-10, 10, 1);
         this.throttle_v         = randFloat(0, 5, 1);
 	}
 }
