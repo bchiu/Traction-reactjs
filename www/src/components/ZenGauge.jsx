@@ -6,9 +6,9 @@ var ZenGauge = React.createClass({
     render: function() {
         return (
             <div style={{ width:'100%', height:'100%' }}>
-                <div style={styles.title}>{this.props.title}</div>
+                <div style={styles.title}>{this.props.params.title}</div>
                 <input id={this.props.id} value={this.props.value} data-width="100%" />
-                <div style={styles.units}>{this.props.units}</div>
+                <div style={styles.units}>{this.props.params.units}</div>
             </div>
         );
     },
@@ -17,9 +17,9 @@ var ZenGauge = React.createClass({
         this.dial = $('#' + this.props.id);
 
         this.dial.knob({
-            min: Math.abs(this.props.min),
-            max: Math.abs(this.props.max),
-            step: this.props.step,
+            min: 0,
+            max: this.props.params.max,
+            step: 1,
             angleOffset: 270,
             angleArc: 360,
             stopper: false,
@@ -33,7 +33,7 @@ var ZenGauge = React.createClass({
     },
 
     componentDidUpdate: function() {
-        var value = parseFloat(this.props.value).toFixed(this.props.precision)
+        var value = parseFloat(this.props.value).toFixed(this.props.params.precision)
         this.dial.val(value).trigger('change');
     }
 });

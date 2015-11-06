@@ -48,7 +48,6 @@ var styles = {
         backfaceVisibility: 'hidden',
         width: '100%',
         height: 'inherit',
-        padding: '10px',
         top: '50%',
         transform: 'translateY(-50%)',
         zIndex: '2'
@@ -59,7 +58,6 @@ var styles = {
         backfaceVisibility: 'hidden',
         width: '100%',
         height: 'inherit',
-        padding: '10px',
         top: '50%',
         transform: 'translateY(-50%) rotateY(180deg)',
         zIndex: '1'

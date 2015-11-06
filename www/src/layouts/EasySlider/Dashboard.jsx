@@ -6,8 +6,10 @@ var ZenGauge   = require("../../components/ZenGauge");
 var Datum      = require("../../components/Datum");
 
 var Dashboard = React.createClass({
+    
     render: function() {
-        var data = this.props.data;
+        var params = this.props.params;
+        var data   = this.props.data;
 
         return (
             <div style={{ height:'100%' }}>
@@ -21,45 +23,24 @@ var Dashboard = React.createClass({
                                 <td style={styles.cell}>
 
                                     <MiniMeter 
-                                        title="Duty Cycle" 
-                                        units="%" 
-                                        min="0" 
-                                        max="100" 
-                                        low="50" 
-                                        high="75" 
-                                        optimum="0" 
-                                        precision="0"
-                                        value={data.duty_now} />
+                                        params={params.motor_duty_cycle}
+                                        value={data.motor_duty_cycle} />
                                 </td>
                             </tr>
                             <tr>
                                 <td style={styles.cell}>
 
                                     <MiniMeter 
-                                        title="Motorᵀ" 
-                                        units="°C" 
-                                        min="0" 
-                                        max="120" 
-                                        low="50" 
-                                        high="90" 
-                                        optimum="0" 
-                                        precision="0"
-                                        value={data.temp_motor} />
+                                        params={params.motor_temp_c}
+                                        value={data.motor_temp_c} />
                                 </td>
                             </tr>
                             <tr>
                                 <td style={styles.cell}>
 
                                     <MiniMeter 
-                                        title="Controlᵀ" 
-                                        units="°C" 
-                                        min="0" 
-                                        max="120" 
-                                        low="50" 
-                                        high="90" 
-                                        optimum="0" 
-                                        precision="0"
-                                        value={data.temp_pcb} />
+                                        params={params.controller_temp_c}
+                                        value={data.controller_temp_c} />
                                 </td>
                             </tr>
                         </tbody>
@@ -73,23 +54,13 @@ var Dashboard = React.createClass({
 
                         <ZenGauge 
                             id="gaugeSpeed" 
-                            title="Speed" 
-                            units="KPH"   
-                            min="0" 
-                            max="100"  
-                            step="1"
-                            precision="0"
-                            value={data.speed} />
+                            params={params.speed_kph}
+                            value={data.speed_kph} />
 
                         <ZenGauge 
                             id="gaugePower" 
-                            title="Power" 
-                            units="Watts" 
-                            min="0" 
-                            max="9999" 
-                            step="1"
-                            precision="0"
-                            value={data.power} />
+                            params={params.power_w}
+                            value={data.power_w} />
                             
                     </Flipcard>
                 </div>
@@ -102,49 +73,36 @@ var Dashboard = React.createClass({
                         <div style={styles.row}>
                             <div style={styles.col}>
                                 <Datum 
-                                    title="Throttle"
-                                    units="V"
-                                    precision="1"
-                                    value={data.throttle_v} />
+                                    params={params.throttle_voltage}
+                                    value={data.throttle_voltage} />
                             </div>
                             <div style={styles.col}>
                                 <Datum 
-                                    title="RPM"
-                                    units=""
-                                    precision="0"
-                                    value={data.rpm} />
+                                    params={params.motor_rpm}
+                                    value={data.motor_rpm} />
                             </div>
                             <div style={styles.col}>
                                 <Datum 
-                                    title="Phase"
-                                    units="A"
-                                    precision="1"
-                                    value={data.current_motor} />
+                                    params={params.motor_phase_current}
+                                    value={data.motor_phase_current} />
                             </div>
                         </div>
 
                         <div style={styles.row}>
                             <div style={styles.col}>
                                 <Datum 
-                                    title="Current"
-                                    units="A"
-                                    precision="1"
-                                    value={data.current_in} />
+                                    params={params.battery_current}
+                                    value={data.battery_current} />
                             </div>
                             <div style={styles.col}>
                                 <Datum 
-                                    title="Used"
-                                    units="Ah"
-                                    precision="1"
+                                    params={params.amp_hours}
                                     value={data.amp_hours} />
                             </div>
                             <div style={styles.col}>
                                 <Datum
-                                    title="Watt/H"
-                                    units=""
-                                    precision="1"
+                                    params={params.watt_hours}
                                     value={data.watt_hours} />
-
                             </div>
                         </div>
                     </div>
@@ -219,14 +177,16 @@ var styles = {
             position: 'absolute',
             width: '100%',
             height: '50%',
-            top: '25%'
+            top: '25%',
+            padding: '2vh'
         },
 
         '@media screen and (orientation:landscape)': {
             position: 'absolute',
             width: '50%',
             height: '100%',
-            left: '25%'
+            left: '25%',
+            padding: '2vh'
         }
     },
 

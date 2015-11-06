@@ -34,9 +34,13 @@ Traction draws upon the ReactJS framework to provide an architecture that encour
 
 __Easy Slider__
 
-![screen shot1](https://raw.githubusercontent.com/bchiu/Traction/master/docs/images/easy.slider.screen1.png)
+![screen shot1](https://raw.githubusercontent.com/bchiu/Traction/master/docs/images/easy-slider-screen1.png)
 
-![screen shot2](https://raw.githubusercontent.com/bchiu/Traction/master/docs/images/easy.slider.screen2.png)
+![screen shot2](https://raw.githubusercontent.com/bchiu/Traction/master/docs/images/easy-slider-screen2.png)
+
+__Sub Mission (preview)__
+
+![screen shot2](https://raw.githubusercontent.com/bchiu/Traction/master/docs/images/sub-mission-screen.png)
 
 # License
 

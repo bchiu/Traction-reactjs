@@ -2,13 +2,15 @@ var React  = require('react');
 var Radium = require('radium');
 
 var Datum = React.createClass({
+	
     render: function() {
-        var value = parseFloat(this.props.value).toFixed(this.props.precision)
+    	var params = this.props.params;
+        var value  = parseFloat(this.props.value).toFixed(params.precision)
 
         return (
             <div style={styles.datum}>
-                <span style={styles.title}>{this.props.title}</span>&nbsp;
-                <span style={styles.value}>{value}{this.props.units}</span>
+                <span style={styles.title}>{params.title}</span>&nbsp;
+                <span style={styles.value}>{value}{params.units}</span>
             </div>
         );
     }

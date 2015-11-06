@@ -4,20 +4,15 @@ Looper = function(fps, onUpdate) {
 	this.onUpdate = onUpdate;
 	this.paused = true;
 
-	$(window).blur(function() {
-		this.stop();
-	}.bind(this));
+	if (window.dev) {
+		$(window).blur(function() {
+			this.stop();
+		}.bind(this));
 
-	$(window).focus(function() {
-		this.start();
-	}.bind(this));
-
-	this.test = function(id) {
-	    $("#" + id).dblclick(function() {
-	        if (this.paused) this.start();
-	        else this.stop();
-	    }.bind(this));
-	};
+		$(window).focus(function() {
+			this.start();
+		}.bind(this));
+	}
 
 	this.update = function() {
 		setTimeout(function() {
@@ -30,12 +25,10 @@ Looper = function(fps, onUpdate) {
 	this.start = function() {
 		this.paused = false;
 		this.update();
-		//console.log(document.title + " started");
 	};
 
 	this.stop = function() {
 		this.paused = true;
-		//console.log(document.title + " stopped");
 	};
 }
 

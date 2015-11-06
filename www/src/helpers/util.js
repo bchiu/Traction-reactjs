@@ -41,31 +41,15 @@ module.exports = {
 		return dst
 	},
 
-	// Function gets point(x,y) on circle at given angle
-	getPointOnCircle: function(r, cx, cy, angle) {
-		var x = cx + r * Math.sin(angle * Math.PI/180);
-		var y = cy - r * Math.cos(angle * Math.PI/180);
-		return { x: x, y: y };	
-	},
-
 	randInt: function(ceiling) {
 		return Math.round(Math.random() * ceiling);
 	},
 
 	randFloat: function(floor, ceiling, decimals) {
-		return parseFloat(Math.random().map(0, 1, floor, ceiling).toFixed(decimals));
+		return parseFloat(this.mapNum(Math.random(), 0, 1, floor, ceiling).toFixed(decimals));
 	},
 
-	setToggleButtonState: function(id, state) {
-		var suffix = (state) ? "On" : "Off";
-		$("#" + id).attr("class", id + suffix);
-	},
-
-	setCycleButtonState: function(id, state) {
-		$("#" + id).attr("class", id + state);
-	},
-}
-
-Number.prototype.map = function (in_min, in_max, out_min, out_max ) {
-	return ( this - in_min ) * ( out_max - out_min ) / ( in_max - in_min ) + out_min;
+    mapNum: function(val, in_min, in_max, out_min, out_max ) {
+        return ( val - in_min ) * ( out_max - out_min ) / ( in_max - in_min ) + out_min;
+    }
 }

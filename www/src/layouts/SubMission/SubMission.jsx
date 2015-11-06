@@ -1,11 +1,12 @@
 /*
-    Mission Impassable - tribute to the now defunct mission RS motorcycle
+    Sub Mission - tribute to the Mission-R motorcycle which has now gone under
 */
 var React      = require('react');
 var Radium     = require('radium');
 var ArcReactor = require("../../components/ArcReactor/ArcReactor");
 var MoonDial   = require("../../components/MoonDial/MoonDial");
 var Flipcard   = require("../../components/Flipcard");
+var Devices    = require('../../components/Devices');
 
 var SubMission = React.createClass({
  
@@ -14,7 +15,8 @@ var SubMission = React.createClass({
     },
 
     render: function() {
-        var data = this.props.data;
+        var params = this.props.params;
+        var data   = this.props.data;
 
         return (
         	<div style={styles.container}>
@@ -37,6 +39,8 @@ var SubMission = React.createClass({
                     </tbody>
                 </table>
 
+                <div style={styles.line} />
+
                 <table style={styles.main}>
                     <tbody>
                         <tr valign="center">
@@ -48,25 +52,15 @@ var SubMission = React.createClass({
                                         id="arcReactor1"
                                         invert={false}
                                         colors={0}
-                                        title="Speed" 
-                                        units="MPH"
-                                        min={0} 
-                                        max={160}
-                                        step={20}
-                                        precision={0}
-                                        value={data.speed} />
+                                        params={params.speed_kph}
+                                        value={data.speed_kph} />
 
                                     <ArcReactor
                                         id="arcReactor2"
                                         invert={false}
                                         colors={-45}
-                                        title="Speed" 
-                                        units="KPH"
-                                        min={0} 
-                                        max={260}
-                                        step={20}
-                                        precision={0}
-                                        value={data.speed} />
+                                        params={params.speed_mph}
+                                        value={data.speed_mph} />
 
                                 </Flipcard>
                             </td>
@@ -87,26 +81,16 @@ var SubMission = React.createClass({
                                     <ArcReactor
                                         id="arcGauge3"
                                         invert={true}
-                                        colors={120}
-                                        title="Power" 
-                                        units="KW"
-                                        min={0.0} 
-                                        max={10.0}
-                                        step={1.0}
-                                        precision={1}
+                                        colors={90}
+                                        params={params.power_kw}
                                         value={data.power_kw} />
 
                                     <ArcReactor
                                         id="arcGauge4"
                                         invert={true}
-                                        colors={180}
-                                        title="Current" 
-                                        units="Amps"
-                                        min={0} 
-                                        max={150}
-                                        step={20}
-                                        precision={0}
-                                        value={data.current_in} />
+                                        colors={45}
+                                        params={params.battery_current}
+                                        value={data.battery_current} />
 
                                 </Flipcard>
                             </td>
@@ -129,44 +113,30 @@ var SubMission = React.createClass({
 
                                 <MoonDial
                                     id="moonDial1"
-                                    min={0}
-                                    max={120}
-                                    units="Motor (°C)"
-                                    precision={0}
-                                    value={data.temp_motor} />
-
+                                    params={params.motor_temp_c}
+                                    value={data.motor_temp_c} />
                             </td>
                             <td width="25%">
 
                                 <MoonDial
                                     id="moonDial2"
-                                    min={0}
-                                    max={120}
-                                    units="Battery (°C)"
-                                    precision={0}
-                                    value={data.temp_battery} />
-
+                                    params={params.battery_temp_c}
+                                    value={data.battery_temp_c} />
                             </td>
                             <td width="25%">
 
                                 <MoonDial
                                     id="moonDial3"
-                                    min={0}
-                                    max={120}
-                                    units="Controller (°C)"
-                                    precision={0}
-                                    value={data.temp_pcb} />
-
+                                    params={params.controller_temp_c}
+                                    value={data.controller_temp_c} />
                             </td>
                             <td width="25%">
 
                                 <MoonDial
                                     id="moonDial4"
-                                    min={0}
-                                    max={60}
-                                    units="Battery (V)"
-                                    precision={1}
-                                    value={data.v_in} />
+                                    flipcolor={true}
+                                    params={params.battery_voltage}
+                                    value={data.battery_voltage} />
 
                             </td>
                         </tr>   
@@ -201,10 +171,8 @@ var styles = {
             width: '50%',
             bottom: '0',
             opacity: '0.8',
-            background: 'rgba(18,80,109,1)',
-            background: '-webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(18,80,109,1)), color-stop(90%, rgba(0,0,0,0.1)), color-stop(100%, rgba(0,0,0,0)))',
+            //background: '-webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(18,80,109,1)), color-stop(90%, rgba(0,0,0,0.1)), color-stop(100%, rgba(0,0,0,0)))',
             background: '-webkit-radial-gradient(center, ellipse cover, rgba(18,80,109,1) 0%, rgba(0,0,0,0.1) 90%, rgba(0,0,0,0) 100%)',
-            background: 'radial-gradient(ellipse at center, rgba(18,80,109,1) 0%, rgba(0,0,0,0.1) 90%, rgba(0,0,0,0) 100%)'
         },
 
         drop: {
@@ -213,9 +181,8 @@ var styles = {
             width: '50%',
             bottom: '33%',
             opacity: '0.5',
-            background: '-webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(0,0,0,0.65)), color-stop(30%,rgba(0,0,0,0)))',
+            //background: '-webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(0,0,0,0.65)), color-stop(30%,rgba(0,0,0,0)))',
             background: '-webkit-radial-gradient(center, ellipse cover,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 30%)',
-            background: 'radial-gradient(ellipse at center,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 30%)'
         },
 
         left: {
@@ -244,7 +211,12 @@ var styles = {
     navbar: {
         height: '6%',
         width: '100%',
-        borderBottom: '1px solid #222',
+    },
+
+    line: {
+        width: '100%',
+        height: '1px',
+        background: '#333',
     },
 
     main: {

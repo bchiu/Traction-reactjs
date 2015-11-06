@@ -2,22 +2,30 @@ var React  = require('react');
 var Radium = require('radium');
 
 var MiniMeter = React.createClass({
+
     render: function() {
-        var value = parseFloat(this.props.value).toFixed(this.props.precision)
+        var params = this.props.params;
+
+        var range = params.max - params.min;
+        var low   = params.min + range * 1/3;
+        var high  = params.min + range * 2/3;
+        var ideal = (this.props.descend) ? params.max : params.min // descend: high good, low bad
+
+        var value = parseFloat(this.props.value).toFixed(params.precision)
 
         return (
             <div>
-                <span style={styles.title}>{this.props.title}:</span>&nbsp;
+                <span style={styles.title}>{params.title}:</span>&nbsp;
                 
-                <span style={styles.value}>{value}{this.props.units}</span>&nbsp;
+                <span style={styles.value}>{value}{params.units}</span>&nbsp;
                 
                 <meter 
                     style={styles.meter} 
-                    min={this.props.min} 
-                    max={this.props.max} 
-                    low={this.props.low} 
-                    high={this.props.high} 
-                    optimum={this.props.optimum} 
+                    min={params.min} 
+                    max={params.max} 
+                    low={low} 
+                    high={high} 
+                    optimum={ideal} 
                     value={this.props.value} />
             </div>
         );

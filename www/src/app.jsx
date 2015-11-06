@@ -1,55 +1,106 @@
-var React      = require('react');
-var ReactDOM   = require('react-dom');
-var DataFrame  = require('./models/common/DataFrame');
-var Vesc       = require('./models/vesc/Vesc');
-var Looper     = require('./helpers/Looper');
-var Util       = require('./helpers/Util');
-var EasySlider = require('./layouts/EasySlider/EasySlider');
-var SubMission = require('./layouts/SubMission/SubMission');
-//var ProtoBuf   = require('protobufjs');
+/*
+    Traction - main entry point, data loop, init layout 
+*/
+var React     = require('react');
+var ReactDOM  = require('react-dom');
+var Looper    = require('./helpers/Looper');
+var Util      = require('./helpers/Util');
+//var ProtoBuf  = require('protobufjs');
 
 var Traction = React.createClass({
 
     getInitialState: function() {
         window.dev = !window.cordova;
 
+        // config alias
+        this.config = this.props.config;
+
+        // data parameters
+        this.params = this.config.params;
+
         // disable device sleep
         this.enableWakeLock();
 
         // set controller
-        this.bldc = Vesc;
+        this.bldc = this.props.model;
 
         // bind data to controller
-        this.data = new DataFrame();
+        this.data = this.dataFrame();
         this.bldc.bindData(this.data);
 
         return {
             deviceConnected: false,
+            layout: this.config.layout,
             data: this.data
         }
     },
 
+    setLayout: function(name) {
+        setState({ layout: name });
+    },
+
+    dataFrame: function() {
+        var data = {}
+        for (var key in this.params) {
+            var min = this.params[key].min;
+            data[key] = (min < 0) ? 0 : min;
+        }
+        return data;
+    },
+
+    randomizeData: function() {
+        if (this.fwd === undefined) this.fwd = {};
+
+        for (var key in this.data) {
+            if (this.fwd[key] === undefined) this.fwd[key] = true;
+
+            var min  = this.params[key].min;
+            var max  = this.params[key].max;
+            var step = this.params[key].step/2;
+            var val  = this.data[key];
+            var precision = this.params[key].precision;
+
+            if (this.fwd[key]) {
+                this.data[key] += step;
+                if (this.data[key] + step >= max) this.fwd[key] = false; 
+            } else {
+                this.data[key] -= step;
+                if (this.data[key] - step <= min) this.fwd[key] = true; 
+            }
+        }
+    },
+
     componentDidMount: function() {
+
+        // material ui fx
         $.material.init();
 
+        // data refresh rate
+        var fps = this.config.fps;
+
         // data update loop
-        this.looper = new Looper(15, function() {
+        this.looper = new Looper(fps, function() {
 
-            if (window.dev) this.data.randomize();        // randomize data for debug
-            else if (!this.state.deviceConnected) return; // disconnected, exit loop
-            else this.bldc.requestValues();               // send serial request
+            // randomize data for ui testing
+            this.randomizeData();
 
-            this.setState({ data: this.data }) // commit data updates to state
+            // send serial request
+            if (this.state.deviceConnected) {
+                this.bldc.requestValues();
+            }
+
+            // commit data updates to state
+            this.setState({ data: this.data })
 
         }.bind(this));
 
-        //if (window.dev) this.looper.test('app');
+        //this.looper.start();
     },
 
     enableWakeLock: function() {
         document.addEventListener('deviceready', function() {
             window.powerManagement.acquire(
-                function() { console.warn('Wakelock acquired') }, 
+                function() { console.info('Wakelock acquired') }, 
                 function() { console.warn('Failed to acquire wakelock') }
             );
         });
@@ -76,10 +127,13 @@ var Traction = React.createClass({
     },
 
     render: function() {
+        var Layout = require('./layouts/' + this.state.layout + '/' + this.state.layout);
+
         return (
-            <this.props.layout
-                title="Traction" 
-                data={this.state.data}                
+            <Layout
+                title={this.config.title}
+                data={this.state.data}
+                params={this.params}
                 deviceConnected={this.state.deviceConnected}
                 onDeviceConnect={this.onDeviceConnect}
                 onDeviceDisconnect={this.onDeviceDisconnect} 
@@ -90,6 +144,12 @@ var Traction = React.createClass({
 });
 
 
-//var layout = EasySlider;
-var layout = SubMission;
-ReactDOM.render(<Traction layout={layout} />, document.getElementById('app'));
+/* Run app *******************************************************************/
+
+var Config = require('../traction.config.js');
+
+var Model  = require('./models/' + Config.model + '/' + Config.model + '.js');
+
+var appdom = document.getElementById('app');
+
+ReactDOM.render(<Traction model={Model} config={Config} />, appdom);

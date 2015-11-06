@@ -92,26 +92,26 @@ module.exports = (function() {
 
     function unpack(packet) {
         var i = 3;
-        data.temp_mos1          = sliceInt16(packet, 10.0,    i); i += 2;
-        data.temp_mos2          = sliceInt16(packet, 10.0,    i); i += 2;
-        data.temp_mos3          = sliceInt16(packet, 10.0,    i); i += 2;
-        data.temp_mos4          = sliceInt16(packet, 10.0,    i); i += 2;
-        data.temp_mos5          = sliceInt16(packet, 10.0,    i); i += 2;
-        data.temp_mos6          = sliceInt16(packet, 10.0,    i); i += 2;
-        data.temp_pcb           = sliceInt16(packet, 10.0,    i); i += 2;
-        data.current_motor      = sliceInt32(packet, 100.0,   i); i += 4;
-        data.current_in         = sliceInt32(packet, 100.0,   i); i += 4;
-        data.duty_now           = sliceInt16(packet, 1000.0,  i); i += 2;
-        data.rpm                = sliceInt32(packet, 1.0,     i); i += 4;
-        data.v_in               = sliceInt16(packet, 10.0,    i); i += 2;
-        data.amp_hours          = sliceInt32(packet, 10000.0, i); i += 4;
-        data.amp_hours_charged  = sliceInt32(packet, 10000.0, i); i += 4;
-        data.watt_hours         = sliceInt32(packet, 10000.0, i); i += 4;
-        data.watt_hours_charged = sliceInt32(packet, 10000.0, i); i += 4;
-        data.tachometer         = sliceInt32(packet, 1.0,     i); i += 4;
-        data.tachometer_abs     = sliceInt32(packet, 1.0,     i); i += 4;
-        data.fault_code         = packet[i++];
-        data.fault_str          = FAULT_CODES[data.fault_code];
+        data['temp_mos1']           = sliceInt16(packet, 10.0,    i); i += 2;
+        data['temp_mos2']           = sliceInt16(packet, 10.0,    i); i += 2;
+        data['temp_mos3']           = sliceInt16(packet, 10.0,    i); i += 2;
+        data['temp_mos4']           = sliceInt16(packet, 10.0,    i); i += 2;
+        data['temp_mos5']           = sliceInt16(packet, 10.0,    i); i += 2;
+        data['temp_mos6']           = sliceInt16(packet, 10.0,    i); i += 2;
+        data['controller_temp_c']   = sliceInt16(packet, 10.0,    i); i += 2;
+        data['motor_phase_current'] = sliceInt32(packet, 100.0,   i); i += 4;
+        data['battery_current']     = sliceInt32(packet, 100.0,   i); i += 4;
+        data['motor_duty_cycle']    = sliceInt16(packet, 1000.0,  i); i += 2;
+        data['motor_rpm']           = sliceInt32(packet, 1.0,     i); i += 4;
+        data['battery_voltage']     = sliceInt16(packet, 10.0,    i); i += 2;
+        data['amp_hours']           = sliceInt32(packet, 10000.0, i); i += 4;
+        data['amp_hours_charged']   = sliceInt32(packet, 10000.0, i); i += 4;
+        data['watt_hours']          = sliceInt32(packet, 10000.0, i); i += 4;
+        data['watt_hours_charged']  = sliceInt32(packet, 10000.0, i); i += 4;
+        data['tachometer']          = sliceInt32(packet, 1.0,     i); i += 4;
+        data['tachometer_abs']      = sliceInt32(packet, 1.0,     i); i += 4;
+        data['fault_code']          = packet[i++];
+        data['fault_str']           = FAULT_CODES[data.fault_code];
         //console.log(data);
     }
 

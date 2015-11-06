@@ -1,27 +1,45 @@
 var React  = require('react');
 var Radium = require('radium');
 
+/*
+    ArcReactor - bi-directional led arc guage
+*/
 var ArcReactor = React.createClass({
 
     getInitialState: function() {
-        this.scaleMin   = parseFloat(this.props.min)  || 0;
-        this.scaleMax   = parseFloat(this.props.max)  || 100;
-        this.scaleTick  = parseFloat(this.props.step) || 10;
-        this.scaleUnit  = this.props.units  || "";
-        this.inverted   = this.props.invert || false;
-        this.colorshift = parseInt(this.props.colors) || 0;
-        this.markerMax  = this.scaleMin;
-        this.precision  = parseInt(this.props.precision) || 0;
-        this.value      = this.scaleMin;
+        var params = this.props.params;
 
-        return {
+        // params
+        this.min        = params.min;
+        this.max        = params.max;
+        this.step       = params.step;
+        this.units      = params.units;
+        this.precision  = params.precision;
+
+        // props
+        this.id         = this.props.id;
+        this.colorshift = parseInt(this.props.colors) || 0;
+        this.inverted   = this.props.invert           || false;
+        this.bipolar    = false;
+
+        // instance
+        this.markerMax  = this.min;
+        this.value      = this.min;
+
+        if (this.min < 0) {
+            this.neg = Math.abs(this.min);
+            this.min = 0;
+            this.value = 0;
+            this.bipolar = true;
         }
+
+        return {}
     },
 
     componentDidMount: function() {
         var xml = Snap.parse(require('./ArcReactor.svg'));
 
-        this.svg         = Snap("#" + this.props.id);
+        this.svg         = Snap("#" + this.id);
         this.grp         = this.svg.g();
         this.legend      = this.svg.g();
         this.ticks       = this.svg.g();
@@ -30,32 +48,46 @@ var ArcReactor = React.createClass({
         this.ledBar      = xml.select("#led-bar");
         this.marker      = xml.select("#marker");
         this.markerText  = xml.select("#marker-text");
-        this.clipNode    = xml.select("#clip-path");
-        this.clipPath    = this.clipNode.select("path");
-        this.clipSubPath = this.clipPath.clone();
         this.arcX        = this.guides.select("#center").attr("cx");
         this.arcY        = this.guides.select("#center").attr("cy");
         this.viewBox     = this.svg.node.viewBox.baseVal;
         this.viewPort    = this.svg.node.getBoundingClientRect();
+        this.clipPath    = xml.select("#clip-path > path");
+        this.clipCopy    = this.clipPath.clone();
 
-        if (this.inverted) this.invert(); // flip gauge horizontally
+        // if bipolar set new clip and legend
+        if (this.bipolar) {
+            this.clipPath    = xml.select("#clip-path-bi > #pos-path");
+            this.clipCopy    = this.clipPath.clone();
+            this.clipPathNeg = xml.select("#clip-path-bi > #neg-path");
+            this.clipCopyNeg = this.clipPathNeg.clone(); 
+            this.drawLegend(this.min, this.neg, this.step, this.clipPathNeg);
+            this.drawSticks(this.min, this.neg, this.step, this.clipPathNeg);
+        }
 
-        this.marker.click(this.resetMarker); // click on marker to reset
-        
-        this.drawLegend();
-        this.drawTicks();
+        // draw legend & scale ticks
+        this.drawLegend(this.min, this.max, this.step, this.clipPath);
+        this.drawSticks(this.min, this.max, this.step, this.clipPath);
+
+        // flip canvas horizontally
+        if (this.inverted) this.flipCanvas(); 
+
+        // click handler for marker
+        this.marker.click(this.resetMarker);
+
+        // color hue filter
         this.shiftColor(this.colorshift);
 
-        this.ledBar.attr({ 'mask': this.clipSubPath });
-
+        // construct svg
         this.grp.append(this.marker);
         this.grp.append(this.ticks);
         this.grp.append(this.legend);
         this.grp.append(this.scaleLine);
         this.grp.append(this.ledBar);
 
-        this.setValue(this.scaleMin);
-        this.setMarker(this.scaleMin);
+        // set initial values
+        this.setValue(this.min);
+        this.setMarker(this.min);
     },
 
     componentDidUpdate: function() {
@@ -64,16 +96,14 @@ var ArcReactor = React.createClass({
 
     render: function() {
         this.value = parseFloat(this.props.value).toFixed(this.precision)
-        this.value = Math.min(this.value, this.scaleMax);
-        this.value = Math.max(this.value, this.scaleMin);
 
-        var invertStyle = (this.inverted) ? styles.inverted : {};
+        var invert = (this.inverted) ? styles.inverted : {};
 
         return (
             <div style={{ width:'100%', height:'100%' }}>
-                <svg id={this.props.id} viewBox="0 0 520 520" width="100%" height="100%" />
-                <div style={[styles.value, invertStyle]}>{this.value}</div>
-                <div style={[styles.units, invertStyle]}>{this.props.units}</div>
+                <svg id={this.id} viewBox="0 0 520 520" width="100%" height="100%" />
+                <div style={[styles.value, invert]}>{this.value}</div>
+                <div style={[styles.units, invert]}>{this.units}</div>
             </div>
         );
     },
@@ -81,13 +111,25 @@ var ArcReactor = React.createClass({
     // instance methods -------------------------------------------------------
 
     setValue: function(val) {
-        var path = this.getSubPath(val, this.clipPath); 
-        this.clipSubPath.attr('d', path);
 
-        if (val > this.markerMax) this.setMarker(val);
+        // negative direction
+        if (this.bipolar && val < 0) {
+            this.ledBar.attr({ 'mask': this.clipCopyNeg });
+            var path = this.getSubPath(Math.abs(val), this.min, this.neg, this.clipPathNeg); 
+            this.clipCopyNeg.attr('d', path);
+            this.shiftColor(this.colorshift + 180);
+
+        // positive direction
+        } else {
+            this.ledBar.attr({ 'mask': this.clipCopy });
+            var path = this.getSubPath(val, this.min, this.max, this.clipPath); 
+            this.clipCopy.attr('d', path);
+            this.shiftColor(this.colorshift);
+            if (val > this.markerMax) this.setMarker(val);
+        }
     },
 
-    invert: function() {
+    flipCanvas: function() {
         this.inverted = true;
         this.markerText.attr({ display:'none' });
         this.markerText = this.marker.select("#marker-text-mirror").attr({ display:'block' });
@@ -103,34 +145,36 @@ var ArcReactor = React.createClass({
         return ( val - in_min ) * ( out_max - out_min ) / ( in_max - in_min ) + out_min;
     },
 
-    getPointOnPath: function(val, path) {
+    getPointOnPath: function(val, min, max, path) {
         var pathLen = path.getTotalLength();
-        var subLen  = this.mapNum(val, this.scaleMin, this.scaleMax, 0, pathLen);
+        var subLen  = this.mapNum(val, min, max, 0, pathLen);
         var point   = path.getPointAtLength(subLen);
         return point;
     },
 
-    getSubPath: function(val, path) {
+    getSubPath: function(val, min, max, path) {
         var pathLen = path.getTotalLength();
-        var subLen  = this.mapNum(val, this.scaleMin, this.scaleMax, 0, pathLen);
+        var subLen  = this.mapNum(val, min, max, 0, pathLen);
         var subPath = path.getSubpath(0, subLen);
         return subPath;
     },
 
-    drawLegend: function() {
-        for (var n = this.scaleMin; n <= this.scaleMax; n += this.scaleTick) {
-            var point = this.getPointOnPath(n, this.clipPath);
-            var text = this.legend.text(point.x, point.y, n);
+    drawLegend: function(min, max, step, path) {
+        for (var n = min; n <= max; n += step) {
+
+            var point = this.getPointOnPath(n, min, max, path);
+            var text = this.legend.text(point.x, point.y, n.toString());
+
             $(text.node).css(styles.legendtext);
-            if (this.inverted) text.transform("s-1,1");
+            if (this.inverted) text.transform("s -1 1");
         }
     },
 
-    drawTicks: function() {
+    drawSticks: function(min, max, step, path) {
         $(this.ticks.node).css(styles.ticks);
 
-        for (var n = this.scaleMin; n <= this.scaleMax; n += this.scaleTick/2) {
-            var point = this.getPointOnPath(n, this.clipPath);
+        for (var n = min; n <= max; n += step/2) {
+            var point = this.getPointOnPath(n, min, max, path);
             var angle = Snap.angle(this.arcX, this.arcY, point.x, point.y);
 
             if (angle > 90 && angle < 270) angle = 90; 
@@ -141,19 +185,19 @@ var ArcReactor = React.createClass({
     },
 
     resetMarker: function() {
-        this.setMarker(this.scaleMin);
+        this.setMarker(this.min);
         window.event.stopPropagation();
     },
 
     setMarker: function(val) {
-        var point = this.getPointOnPath(val, this.clipPath);
+        var point = this.getPointOnPath(val, this.min, this.max, this.clipPath);
         var angle = Snap.angle(this.arcX, this.arcY, point.x, point.y);
 
         if (angle > 90 && angle < 270) angle = 90; 
         this.marker.transform("R" + angle + ",0,0" + "T" + point.x + "," + point.y);
 
         this.markerText.attr({ text: val });
-        this.markerMax = val;
+        this.markerMax = parseFloat(val);
     }
 });
 
@@ -193,7 +237,7 @@ var styles = {
         textAnchor: 'middle',
         alignmentBaseline: 'middle',
         fontFamily: 'Calibri',
-        fontSize: '2vh'
+        fontSize: '1.5em'
     },
 
     ticks: {
