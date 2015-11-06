@@ -48,7 +48,7 @@ var Traction = React.createClass({
         return data;
     },
 
-    randomizeData: function() {
+    mockData: function() {
         if (this.fwd === undefined) this.fwd = {};
 
         for (var key in this.data) {
@@ -57,8 +57,6 @@ var Traction = React.createClass({
             var min  = this.params[key].min;
             var max  = this.params[key].max;
             var step = this.params[key].step/2;
-            var val  = this.data[key];
-            var precision = this.params[key].precision;
 
             if (this.fwd[key]) {
                 this.data[key] += step;
@@ -81,8 +79,8 @@ var Traction = React.createClass({
         // data update loop
         this.looper = new Looper(fps, function() {
 
-            // randomize data for ui testing
-            this.randomizeData();
+            // mock data for ui testing
+            this.mockData();
 
             // send serial request
             if (this.state.deviceConnected) {

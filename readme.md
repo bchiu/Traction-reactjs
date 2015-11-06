@@ -40,7 +40,7 @@ __Easy Slider__
 
 __Sub Mission (preview)__
 
-![screen shot2](https://raw.githubusercontent.com/bchiu/Traction/master/docs/images/sub-mission-screen.png)
+![screen shot1](https://raw.githubusercontent.com/bchiu/Traction/master/docs/images/sub-mission-screen.gif)
 
 # License
 
