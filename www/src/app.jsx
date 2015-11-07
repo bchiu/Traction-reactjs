@@ -12,38 +12,33 @@ var Traction = React.createClass({
     getInitialState: function() {
         window.dev = !window.cordova;
 
-        // config alias
-        this.config = this.props.config;
-
-        // data parameters
-        this.params = this.config.params;
+        this.config = this.props.config;  // config alias
+        this.params = this.config.params; // data parameters
 
         // disable device sleep
         this.enableWakeLock();
 
-        // set controller
+        // set controller & bind data
         this.bldc = this.props.model;
-
-        // bind data to controller
         this.data = this.dataFrame();
         this.bldc.bindData(this.data);
 
         return {
-            deviceConnected: false,
+            data: this.data,
             layout: this.config.layout,
-            data: this.data
+            deviceConnected: false,
         }
     },
 
     setLayout: function(name) {
-        setState({ layout: name });
+        setState({ layout: name }); // change layout on-the-fly
     },
 
     dataFrame: function() {
         var data = {}
         for (var key in this.params) {
             var min = this.params[key].min;
-            data[key] = (min < 0) ? 0 : min;
+            data[key] = (min < 0) ? 0 : min; // init with positive values
         }
         return data;
     },
@@ -79,7 +74,7 @@ var Traction = React.createClass({
         // data update loop
         this.looper = new Looper(fps, function() {
 
-            // mock data for ui testing
+            // mock ui test
             this.mockData();
 
             // send serial request

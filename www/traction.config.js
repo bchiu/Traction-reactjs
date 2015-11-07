@@ -9,12 +9,16 @@ module.exports = {
 
 	model: 'Vesc', // Vesc | Mobipus
 
-	fps: 30,
+	fps: 30, 
+
+ 	// available layouts
 
 	layouts: [
 		'EasySlider',
 		'SubMission'
 	],
+
+ 	// data parameters
 
 	params: {
 
@@ -180,6 +184,8 @@ module.exports = {
 			precision: 0
 		}
 	},
+
+	// user preferences
 
 	user: {
 		wheel_circumference_mm: {

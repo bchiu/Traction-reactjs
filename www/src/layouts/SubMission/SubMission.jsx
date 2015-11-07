@@ -11,12 +11,14 @@ var Devices    = require('../../components/Devices');
 var SubMission = React.createClass({
  
     showDevices: function() {
-        //this.refs.devices.showModal();
+        this.refs.devices.showModal();
     },
 
     render: function() {
         var params = this.props.params;
         var data   = this.props.data;
+
+        var btButtonState = (this.props.deviceConnected) ? styles.btButtonOn : {};
 
         return (
         	<div style={styles.container}>
@@ -33,7 +35,13 @@ var SubMission = React.createClass({
                 <table style={styles.navbar}>
                     <tbody>
                         <tr valign="center">
-                            <td>
+                            <td style={{ textAlign: "right" }}>
+                                <button className="btn" style={[styles.btButton, btButtonState]} onClick={this.showDevices}>
+                                    <svg style={styles.btButtonIcon} fill="#FFFFFF" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M0 0h24v24H0z" fill="none"/>
+                                        <path d="M17.71 7.71L12 2h-1v7.59L6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 11 14.41V22h1l5.71-5.71-4.3-4.29 4.3-4.29zM13 5.83l1.88 1.88L13 9.59V5.83zm1.88 10.46L13 18.17v-3.76l1.88 1.88z"/>
+                                    </svg>
+                                </button>
                             </td>
                         </tr>
                     </tbody>
@@ -142,6 +150,11 @@ var SubMission = React.createClass({
                         </tr>   
                     </tbody>
                 </table>
+
+                <Devices ref="devices" 
+                    onConnect={this.props.onDeviceConnect} 
+                    onDisconnect={this.props.onDeviceDisconnect} />
+
             </div>
         );
     }
@@ -153,7 +166,8 @@ var styles = {
         width: '100vw',
         height: '100vh',
         position: 'absolute',
-        opacity: '0.0',
+        opacity: '0.2',
+        display: 'none'
     },
 
     backdrop: {
@@ -251,6 +265,25 @@ var styles = {
         position: 'absolute',
         bottom: '30%',
         right: '35%'
+    },
+
+    btButton: {
+        border: 'none',
+        width: '4vh',
+        height: 'auto',
+        padding: '0.2vh',
+        marginRight: '1vh',
+        borderRadius: '50%',
+        overflow: 'hidden',
+        background: '#337ab7',
+    },
+
+    btButtonOn: {
+        background: '#5cb85c',
+    },
+
+    btButtonIcon: {
+        display: 'block'
     }
 }
 
