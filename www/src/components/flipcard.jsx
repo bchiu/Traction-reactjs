@@ -1,7 +1,7 @@
 var React  = require('react');
 var Radium = require('radium');
 
-var Flipcard = React.createClass({
+module.exports = Radium(React.createClass({
 
     getInitialState: function() {
         return {
@@ -29,7 +29,7 @@ var Flipcard = React.createClass({
             </div>
         );
     }
-});
+}));
 
 var styles = {
 
@@ -71,5 +71,3 @@ var styles = {
         transform: 'none'
     }
 }
-
-module.exports = Radium(Flipcard);

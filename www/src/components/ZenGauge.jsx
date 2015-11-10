@@ -64,6 +64,9 @@ var styles = {
 module.exports = Radium(ZenGauge);
 
 
+/* javascript lib ************************************************************/
+
+
 (function(factory) { factory(jQuery) }
     (function($) {
 

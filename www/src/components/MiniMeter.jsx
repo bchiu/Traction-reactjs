@@ -1,7 +1,7 @@
 var React  = require('react');
 var Radium = require('radium');
 
-var MiniMeter = React.createClass({
+module.exports = Radium(React.createClass({
 
     render: function() {
         var params = this.props.params;
@@ -30,7 +30,7 @@ var MiniMeter = React.createClass({
             </div>
         );
     }
-});
+}));
 
 var styles = {
 
@@ -58,5 +58,3 @@ var styles = {
         fontWeight: 'bold'
     }
 }
-
-module.exports = Radium(MiniMeter);

@@ -4,7 +4,7 @@ var Radium = require('radium');
 /*
     ArcReactor - bi-directional led arc guage
 */
-var ArcReactor = React.createClass({
+module.exports = Radium(React.createClass({
 
     getInitialState: function() {
         var params = this.props.params;
@@ -108,7 +108,7 @@ var ArcReactor = React.createClass({
         );
     },
 
-    // instance methods -------------------------------------------------------
+/* instance methods **********************************************************/
 
     setValue: function(val) {
 
@@ -199,7 +199,9 @@ var ArcReactor = React.createClass({
         this.markerText.attr({ text: val });
         this.markerMax = parseFloat(val);
     }
-});
+}));
+
+/* styles ********************************************************************/
 
 var styles = {
 
@@ -245,5 +247,3 @@ var styles = {
         strokeWidth: '3px',
     }
 }
-
-module.exports = Radium(ArcReactor);

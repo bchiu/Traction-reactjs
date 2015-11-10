@@ -1,7 +1,7 @@
 var React    = require('react');
 var Radium   = require('radium');
 
-var Spinner = React.createClass({
+module.exports = Radium(React.createClass({
     render: function() {
         return (
             <svg 
@@ -22,7 +22,7 @@ var Spinner = React.createClass({
             </svg>
         );
     }
-});
+}));
 
 var rotator = Radium.keyframes({
     '0%':   { WebkitTransform: 'rotate(0deg)',   transform: 'rotate(0deg)'   },
@@ -59,5 +59,3 @@ var styles = {
         animation: `${dash} 1.4s ease-in-out infinite, ${colors} 5.6s ease-in-out infinite`
     }
 }
-
-module.exports = Radium(Spinner);

@@ -33,7 +33,7 @@ module.exports = {
 
 		battery_current: {
 			title: 'Current',
-			units: 'Amps',
+			units: 'A',
 			min: -80,
 			max: 200,
 			step: 20,
@@ -45,13 +45,13 @@ module.exports = {
             units: 'KW',
             min: -4.0, 
             max: 10.0,
-            step: 2.0,
+            step: 1.0,
             precision: 1
         },
 
 		power_w: {
         	title: 'Power', 
-            units: 'Watts',
+            units: 'W',
             min: -5000, 
             max: 10000,
             step: 100,
@@ -104,7 +104,7 @@ module.exports = {
 		},
 
 		motor_temp_c: {
-			title: 'Motorᵀ',
+			title: 'Motor (T)',
 			units: '°C',
 			min: 24,
 			max: 120,
@@ -131,7 +131,7 @@ module.exports = {
 		},
 
 		controller_temp_c: {
-			title: 'Controlᵀ',
+			title: 'Drive (T)',
 			units: '°C',
 			min: 24,
 			max: 120,
@@ -140,7 +140,7 @@ module.exports = {
 		},
 
 		battery_temp_c: {
-			title: 'Batteryᵀ',
+			title: 'Battery (T)',
 			units: '°C',
 			min: 24,
 			max: 120,
@@ -167,8 +167,8 @@ module.exports = {
 		},
 
 		amp_hours: {
-			title: 'Amp Hours',
-			units: 'Ah',
+			title: 'Amp Hrs',
+			units: '',
 			min: 0.0,
 			max: 20.0,
 			step: 1.0,
@@ -176,8 +176,8 @@ module.exports = {
 		},
 
 		watt_hours: {
-			title: 'Watt Hours',
-			units: 'Wh',
+			title: 'Watt Hrs',
+			units: '',
 			min: 0,
 			max: 500,
 			step: 50,

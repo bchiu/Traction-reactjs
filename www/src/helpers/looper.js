@@ -1,5 +1,14 @@
-// UI update looper
-Looper = function(fps, onUpdate) {
+/*
+	data updater and ui looper
+*/
+module.exports = function(fps, onUpdate) {
+
+	var requestAnimationFrame = window.requestAnimationFrame
+	    || window.webkitRequestAnimationFrame
+	    || window.mozRequestAnimationFrame
+	    || window.msRequestAnimationFrame
+	    || function(callback) { return setTimeout(callback, 1000 / fps) };
+
   	this.fps = fps;
 	this.onUpdate = onUpdate;
 	this.paused = true;
@@ -31,5 +40,3 @@ Looper = function(fps, onUpdate) {
 		this.paused = true;
 	};
 }
-
-module.exports = Looper;

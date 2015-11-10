@@ -1,29 +1,36 @@
 var React  = require('react');
 var Radium = require('radium');
 
-var JumboMeter = React.createClass({
+module.exports = Radium(React.createClass({
 
     render: function() {
-        var value = parseFloat(this.props.value).toFixed(this.props.precision)
+        var params = this.props.params;
+
+        var range = params.max - params.min;
+        var low   = params.min + range * 1/3;
+        var high  = params.min + range * 2/3;
+        var ideal = (this.props.descend) ? params.max : params.min // descend: high good, low bad
+
+        var value = parseFloat(this.props.value).toFixed(params.precision)
 
         return (
             <div style={styles.container}>
                 <meter 
                     style={styles.meter}
-                    min={this.props.min} 
-                    max={this.props.max} 
-                    low={this.props.low} 
-                    high={this.props.high} 
-                    optimum={this.props.optimum} 
+                    min={params.min} 
+                    max={params.max} 
+                    low={low} 
+                    high={high} 
+                    optimum={ideal} 
                     value={this.props.value} />
 
                 <div style={styles.value}>
-                    {value} {this.props.units}
+                    {value} {params.units}
                 </div>
             </div>
         );
     }
-});
+}));
 
 var styles = {
 
@@ -49,5 +56,3 @@ var styles = {
         right: '0'
     }
 }
-
-module.exports = Radium(JumboMeter);

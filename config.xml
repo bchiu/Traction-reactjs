@@ -24,5 +24,4 @@
         <allow-intent href="itms-apps:*" />
     </platform>
     <preference name="Fullscreen" value="true" />
-    <preference name="Orientation" value="landscape" />
 </widget>

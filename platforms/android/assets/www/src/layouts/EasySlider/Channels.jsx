@@ -6,7 +6,7 @@ var Radium         = require('radium');
 var DropdownButton = require('react-bootstrap/lib/DropdownButton');
 var MenuItem       = require('react-bootstrap/lib/MenuItem');
 
-var Channels = React.createClass({
+module.exports = Radium(React.createClass({
 
     getInitialState: function() {
         return {
@@ -39,7 +39,7 @@ var Channels = React.createClass({
 
         );
     }
-});
+}));
 
 var styles = {
 
@@ -48,5 +48,3 @@ var styles = {
         height: '85%'
     }
 }
-
-module.exports = Radium(Channels);

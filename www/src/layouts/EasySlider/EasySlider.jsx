@@ -4,18 +4,13 @@
 var React      = require('react');
 var Radium     = require('radium');
 var Dashboard  = require('./Dashboard');
-var GoogleMaps = require('./GoogleMaps');
 var ToolBar    = require('./Toolbar');
-var Devices    = require('../../components/Devices');
+var GoogleMap  = require('../../components/GoogleMap');
 var Sliders    = require('../../components/Sliders');
 var JumboMeter = require('../../components/JumboMeter');
 
-var EasySlider = React.createClass({
+module.exports = Radium(React.createClass({
  
-    showDevices: function() {
-        this.refs.devices.showModal();
-    },
-
     lockSlider: function() {
     	this.refs.sliders.lock();
     },
@@ -30,7 +25,7 @@ var EasySlider = React.createClass({
 
                     <ToolBar 
                         title={this.props.title}
-                        showDevices={this.showDevices} 
+                        showDevices={this.props.showDevices} 
                         deviceConnected={this.props.deviceConnected} />
 
                 </div>
@@ -52,8 +47,11 @@ var EasySlider = React.createClass({
                         <Dashboard data={data} params={params} />
 
                         <div style={{ height:'100%' }}>
-                            <GoogleMaps />
+
+                            <GoogleMap />
+                            
                             <Sliders.Lock onToggle={this.lockSlider} />
+
                         </div>
 
     		        </Sliders>
@@ -67,13 +65,7 @@ var EasySlider = React.createClass({
                         value={data.odometer_km} />
 
                 </div>
-
-                <Devices ref="devices" 
-                    onConnect={this.props.onDeviceConnect} 
-                    onDisconnect={this.props.onDeviceDisconnect} />
 		    </div>
         );
     }
-});
-
-module.exports = Radium(EasySlider);
+}));

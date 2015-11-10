@@ -1,7 +1,7 @@
 var React  = require('react');
 var Radium = require('radium');
 
-var JumboMeter = React.createClass({
+module.exports = Radium(React.createClass({
 
     render: function() {
         var params = this.props.params;
@@ -30,7 +30,7 @@ var JumboMeter = React.createClass({
             </div>
         );
     }
-});
+}));
 
 var styles = {
 
@@ -56,5 +56,3 @@ var styles = {
         right: '0'
     }
 }
-
-module.exports = Radium(JumboMeter);

@@ -3,9 +3,9 @@ var Radium     = require('radium');
 var MiniMeter  = require("../../components/MiniMeter");
 var Flipcard   = require("../../components/Flipcard");
 var ZenGauge   = require("../../components/ZenGauge");
-var Datum      = require("../../components/Datum");
+var TextData   = require("../../components/TextData");
 
-var Dashboard = React.createClass({
+module.exports = Radium(React.createClass({
     
     render: function() {
         var params = this.props.params;
@@ -72,17 +72,17 @@ var Dashboard = React.createClass({
                         
                         <div style={styles.row}>
                             <div style={styles.col}>
-                                <Datum 
+                                <TextData 
                                     params={params.throttle_voltage}
                                     value={data.throttle_voltage} />
                             </div>
                             <div style={styles.col}>
-                                <Datum 
+                                <TextData 
                                     params={params.motor_rpm}
                                     value={data.motor_rpm} />
                             </div>
                             <div style={styles.col}>
-                                <Datum 
+                                <TextData 
                                     params={params.motor_phase_current}
                                     value={data.motor_phase_current} />
                             </div>
@@ -90,17 +90,17 @@ var Dashboard = React.createClass({
 
                         <div style={styles.row}>
                             <div style={styles.col}>
-                                <Datum 
+                                <TextData 
                                     params={params.battery_current}
                                     value={data.battery_current} />
                             </div>
                             <div style={styles.col}>
-                                <Datum 
+                                <TextData 
                                     params={params.amp_hours}
                                     value={data.amp_hours} />
                             </div>
                             <div style={styles.col}>
-                                <Datum
+                                <TextData
                                     params={params.watt_hours}
                                     value={data.watt_hours} />
                             </div>
@@ -110,7 +110,7 @@ var Dashboard = React.createClass({
             </div>
         );
     }
-});
+}));
 
 var styles = {
 
@@ -210,5 +210,3 @@ var styles = {
         }
     }
 }
-
-module.exports = Radium(Dashboard);

@@ -2,7 +2,7 @@ var React    = require('react');
 var Radium   = require('radium');
 var Channels = require('./Channels');
 
-var Toolbar = React.createClass({
+module.exports = Radium(React.createClass({
     render: function() {
         var btButtonState = (this.props.deviceConnected) ? styles.btButtonOn : {};
 
@@ -32,7 +32,7 @@ var Toolbar = React.createClass({
             </table>
         );
     }
-});
+}));
 
 var styles = {
 
@@ -70,5 +70,3 @@ var styles = {
         display: 'block'
     }
 }
-
-module.exports = Radium(Toolbar);

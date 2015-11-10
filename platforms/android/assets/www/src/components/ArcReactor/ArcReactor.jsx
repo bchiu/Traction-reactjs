@@ -1,31 +1,45 @@
 var React  = require('react');
 var Radium = require('radium');
 
-var ArcReactor = React.createClass({
+/*
+    ArcReactor - bi-directional led arc guage
+*/
+module.exports = Radium(React.createClass({
 
     getInitialState: function() {
-        this.min        = parseFloat(this.props.min)     || 0;
-        this.max        = parseFloat(this.props.max)     || 100;
-        this.step       = parseFloat(this.props.step)    || (this.max - this.min)/10;
-        this.neg        = parseFloat(this.props.neg)     || 50;
-        this.negstep    = parseFloat(this.props.negstep) || this.step;
-        this.colorshift = parseInt(this.props.colors)    || 0;
-        this.precision  = parseInt(this.props.precision) || 0;
-        this.units      = this.props.units               || "";
-        this.inverted   = this.props.invert              || false;
-        this.bipolar    = this.props.bipolar             || false;
+        var params = this.props.params;
 
+        // params
+        this.min        = params.min;
+        this.max        = params.max;
+        this.step       = params.step;
+        this.units      = params.units;
+        this.precision  = params.precision;
+
+        // props
+        this.id         = this.props.id;
+        this.colorshift = parseInt(this.props.colors) || 0;
+        this.inverted   = this.props.invert           || false;
+        this.bipolar    = false;
+
+        // instance
         this.markerMax  = this.min;
         this.value      = this.min;
 
-        return {
+        if (this.min < 0) {
+            this.neg = Math.abs(this.min);
+            this.min = 0;
+            this.value = 0;
+            this.bipolar = true;
         }
+
+        return {}
     },
 
     componentDidMount: function() {
         var xml = Snap.parse(require('./ArcReactor.svg'));
 
-        this.svg         = Snap("#" + this.props.id);
+        this.svg         = Snap("#" + this.id);
         this.grp         = this.svg.g();
         this.legend      = this.svg.g();
         this.ticks       = this.svg.g();
@@ -41,22 +55,22 @@ var ArcReactor = React.createClass({
         this.clipPath    = xml.select("#clip-path > path");
         this.clipCopy    = this.clipPath.clone();
 
-        // if bipolar set new clip path and legend
+        // if bipolar set new clip and legend
         if (this.bipolar) {
             this.clipPath    = xml.select("#clip-path-bi > #pos-path");
             this.clipCopy    = this.clipPath.clone();
             this.clipPathNeg = xml.select("#clip-path-bi > #neg-path");
             this.clipCopyNeg = this.clipPathNeg.clone(); 
-            this.drawLegend(this.min, this.neg, this.negstep, this.clipPathNeg);
-            this.drawTicks(this.min, this.neg, this.negstep, this.clipPathNeg);
+            this.drawLegend(this.min, this.neg, this.step, this.clipPathNeg);
+            this.drawSticks(this.min, this.neg, this.step, this.clipPathNeg);
         }
 
-        // draw legend & tick marks
+        // draw legend & scale ticks
         this.drawLegend(this.min, this.max, this.step, this.clipPath);
-        this.drawTicks(this.min, this.max, this.step, this.clipPath);
+        this.drawSticks(this.min, this.max, this.step, this.clipPath);
 
-        // flip marker horizontally
-        if (this.inverted) this.flipMarker(); 
+        // flip canvas horizontally
+        if (this.inverted) this.flipCanvas(); 
 
         // click handler for marker
         this.marker.click(this.resetMarker);
@@ -87,14 +101,14 @@ var ArcReactor = React.createClass({
 
         return (
             <div style={{ width:'100%', height:'100%' }}>
-                <svg id={this.props.id} viewBox="0 0 520 520" width="100%" height="100%" />
+                <svg id={this.id} viewBox="0 0 520 520" width="100%" height="100%" />
                 <div style={[styles.value, invert]}>{this.value}</div>
-                <div style={[styles.units, invert]}>{this.props.units}</div>
+                <div style={[styles.units, invert]}>{this.units}</div>
             </div>
         );
     },
 
-    // instance methods -------------------------------------------------------
+/* instance methods **********************************************************/
 
     setValue: function(val) {
 
@@ -115,7 +129,7 @@ var ArcReactor = React.createClass({
         }
     },
 
-    flipMarker: function() {
+    flipCanvas: function() {
         this.inverted = true;
         this.markerText.attr({ display:'none' });
         this.markerText = this.marker.select("#marker-text-mirror").attr({ display:'block' });
@@ -156,7 +170,7 @@ var ArcReactor = React.createClass({
         }
     },
 
-    drawTicks: function(min, max, step, path) {
+    drawSticks: function(min, max, step, path) {
         $(this.ticks.node).css(styles.ticks);
 
         for (var n = min; n <= max; n += step/2) {
@@ -183,9 +197,11 @@ var ArcReactor = React.createClass({
         this.marker.transform("R" + angle + ",0,0" + "T" + point.x + "," + point.y);
 
         this.markerText.attr({ text: val });
-        this.markerMax = val;
+        this.markerMax = parseFloat(val);
     }
-});
+}));
+
+/* styles ********************************************************************/
 
 var styles = {
 
@@ -231,5 +247,3 @@ var styles = {
         strokeWidth: '3px',
     }
 }
-
-module.exports = Radium(ArcReactor);

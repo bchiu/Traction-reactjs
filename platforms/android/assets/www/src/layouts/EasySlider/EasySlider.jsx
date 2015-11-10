@@ -1,83 +1,71 @@
 /*
-    Easy Slider - simple layout with slide boxes
+    Easy Slider - simple responsive layout that works with very small devices 
 */
 var React      = require('react');
 var Radium     = require('radium');
 var Dashboard  = require('./Dashboard');
-var GoogleMaps = require('./GoogleMaps');
-var Devices    = require('./Devices');
 var ToolBar    = require('./Toolbar');
+var GoogleMap  = require('../../components/GoogleMap');
 var Sliders    = require('../../components/Sliders');
 var JumboMeter = require('../../components/JumboMeter');
 
-var EasySlider = React.createClass({
+module.exports = Radium(React.createClass({
  
-    showDevices: function() {
-        this.refs.devices.showModal();
-    },
-
     lockSlider: function() {
     	this.refs.sliders.lock();
     },
 
     render: function() {
-        var data = this.props.data;
+        var params = this.props.params;
+        var data   = this.props.data;
 
         return (
         	<div style={{ height:'100%' }}>
                 <div style={{ height:'10%' }}>
+
                     <ToolBar 
                         title={this.props.title}
-                        showDevices={this.showDevices} 
+                        showDevices={this.props.showDevices} 
                         deviceConnected={this.props.deviceConnected} />
+
                 </div>
 
                 <div style={{ height:'5%' }}>
-                    <JumboMeter 
-                        title="Battery"
-                        units="V" 
-                        min="12" 
-                        max="16.8" 
-                        low="13" 
-                        high="15" 
-                        optimum="16.8" 
-                        precision="1"
-                        value={data.v_in} />
+
+                    <JumboMeter descend={true} 
+                        params={params.battery_voltage}
+                        value={data.battery_voltage} />
+
                 </div>
 
                 <div style={{ height:'80%' }}>
-    		        <Sliders 
-                        ref="sliders"
+
+    		        <Sliders ref="sliders"
                         onTouchStart={this.props.onTouchStart}
                         onTouchEnd={this.props.onTouchEnd}>
 
-                        <Dashboard data={data} />
+                        <Dashboard data={data} params={params} />
+
                         <div style={{ height:'100%' }}>
-                            <GoogleMaps />
+
+                            <GoogleMap />
+                            
                             <Sliders.Lock onToggle={this.lockSlider} />
+
                         </div>
+
     		        </Sliders>
+
                 </div>
 
                 <div style={{ height:'5%' }}>
-                    <JumboMeter
-                        title="Distance"
-                        units="km" 
-                        min="0" 
-                        max="200" 
-                        low="150" 
-                        high="100" 
-                        optimum="0" 
-                        precision="1"
-                        value={data.odometer} />
-                </div>
 
-                <Devices ref="devices" 
-                    onConnect={this.props.onDeviceConnect} 
-                    onDisconnect={this.props.onDeviceDisconnect} />
+                    <JumboMeter
+                        params={params.odometer_km}
+                        value={data.odometer_km} />
+
+                </div>
 		    </div>
         );
     }
-});
-
-module.exports = Radium(EasySlider);
+}));

@@ -27,6 +27,10 @@
                         {
                             "xml": "<feature name=\"PowerManagement\"><param name=\"android-package\" value=\"org.apache.cordova.powermanagement.PowerManagement\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"YoikScreenOrientation\"><param name=\"android-package\" value=\"net.yoik.cordova.plugins.screenorientation.YoikScreenOrientation\" /></feature>",
+                            "count": 1
                         }
                     ],
                     "/widget": [
@@ -87,6 +91,9 @@
             "PACKAGE_NAME": "com.buttonbikes.bldcapp"
         },
         "at.gofg.sportscomputer.powermanagement": {
+            "PACKAGE_NAME": "com.buttonbikes.bldcapp"
+        },
+        "cordova-plugin-screen-orientation": {
             "PACKAGE_NAME": "com.buttonbikes.bldcapp"
         }
     },
